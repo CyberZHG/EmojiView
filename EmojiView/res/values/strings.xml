@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">EmojiView</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="emoji_button_text">Show/Hide Emoji Input</string>
+    <string name="emoji_edit_hint">Try emoji here.</string>
+
+</resources>

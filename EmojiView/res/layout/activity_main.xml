@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/emojiEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/emoji_edit_hint"
+        android:ems="10" >
+        <requestFocus />
+    </EditText>
+    
+    <Button 
+        android:id="@+id/emojiButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/emoji_button_text"
+        android:onClick="toggleEmojiView"/>
+    
+    <com.zhaohg.emojiview.EmojiView
+        android:id="@+id/emojiView"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"/>
+
+</LinearLayout>
