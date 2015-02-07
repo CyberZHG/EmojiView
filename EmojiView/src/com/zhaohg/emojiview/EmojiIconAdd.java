@@ -18,12 +18,14 @@ public class EmojiIconAdd extends EmojiIcon {
 		return new String(Character.toChars(code));
 	}
 	
-	public void setEmojiCode(int code) {
-		this.setEmojiText(convertCodeToString(code));
-	}
-	
-	public void setEmojiCode(int code1, int code2) {
-		this.setEmojiText(convertCodeToString(code1) + convertCodeToString(code2));
+	public void setEmojiCode(long code) {
+		if ((code | 0xffffffff00000000L) == 0) {
+			this.setEmojiText(convertCodeToString((int)code));
+		} else {
+			int high = (int)((code & 0xffffffff00000000L) >> 32);
+			int low = (int)(code & 0x00000000ffffffffL);
+			this.setEmojiText(convertCodeToString(high) + convertCodeToString(low));
+		}
 	}
 	
 	public void setEmojiText(String text) {

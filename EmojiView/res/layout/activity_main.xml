@@ -7,8 +7,7 @@
     <TextView
         android:id="@+id/emojiTextView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16pt"/>
+        android:layout_height="wrap_content"/>
 
     <EditText
         android:id="@+id/emojiEditText"
@@ -29,6 +28,7 @@
     <com.zhaohg.emojiview.EmojiView
         android:id="@+id/emojiView"
         android:layout_width="match_parent"
-        android:layout_height="150dp"/>
+        android:layout_height="350dp"
+        android:background="#EDEDED"/>
 
 </LinearLayout>

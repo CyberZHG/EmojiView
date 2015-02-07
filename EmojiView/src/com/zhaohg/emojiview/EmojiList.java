@@ -1,22 +1,32 @@
 package com.zhaohg.emojiview;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
 
-public abstract class EmojiList {
+public class EmojiList {
 	
-	public abstract List<EmojiIcon> getIcons(Context context);
+	Context context;
 	
-	protected EmojiIcon newIcon(Context context, int code) {
-		EmojiIconAdd icon = new EmojiIconAdd(context);
-		icon.setEmojiCode(code);
-		return icon;
+	public EmojiList(Context context) {
+		this.context = context;
 	}
 	
-	protected EmojiIcon newIcon(Context context, int code1, int code2) {
+	public List<EmojiIcon> getIcons(int type) {
+		long[] codeList = EmojiCodeMap.getCodeList(type);
+		List<EmojiIcon> icons = new ArrayList<EmojiIcon>();
+		for (long code : codeList) {
+			int id = EmojiCodeMap.getDrawableID(code);
+			icons.add(newIcon(code, id));
+		}
+		return icons;
+	}
+	
+	protected EmojiIcon newIcon(long code, int id) {
 		EmojiIconAdd icon = new EmojiIconAdd(context);
-		icon.setEmojiCode(code1, code2);
+		icon.setEmojiCode(code);
+		icon.setImageDrawable(this.context.getResources().getDrawable(id));
 		return icon;
 	}
 }

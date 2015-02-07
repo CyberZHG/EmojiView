@@ -3,6 +3,7 @@ package com.zhaohg.emojiview;
 import java.util.List;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -21,11 +22,13 @@ public class EmojiPage extends TableLayout {
 		this.icons = new EmojiIcon[rowNum][colNum];
 		this.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 
 				ViewGroup.LayoutParams.MATCH_PARENT));
+		this.setOrientation(VERTICAL);
 		this.setStretchAllColumns(true);
+		this.setWeightSum(rowNum);
 		for (int i = 0; i < rowNum; ++i) {
 			TableRow row = new TableRow(this.getContext());
-			row.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 
-					ViewGroup.LayoutParams.WRAP_CONTENT));
+			row.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1));
+			row.setGravity(Gravity.FILL);
 			for (int j = 0; j < colNum; ++j) {
 				View icon;
 				if (i == rowNum - 1 && j == colNum - 1) {
@@ -39,6 +42,7 @@ public class EmojiPage extends TableLayout {
 						icon = new View(this.getContext());
 					}
 				}
+				icon.setPadding(2, 2, 2, 2);
 				row.addView(icon);
 			}
 			this.addView(row);

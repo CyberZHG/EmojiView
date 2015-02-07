@@ -8,11 +8,6 @@ import android.view.View;
 
 public class EmojiResourceManager {
 	
-	public static final int EMOJI_TYPE_EMOTICON = 0;
-	public static final int EMOJI_TYPE_DINGBAT = 1;
-	public static final int EMOJI_TYPE_ENCLOSED = 2;
-	public static final int EMOJI_TYPE_UNCATEGORIZED = 3;
-	
 	private Context context;
 	
 	public EmojiResourceManager(Context context) {
@@ -21,8 +16,8 @@ public class EmojiResourceManager {
 	
 	public List<View> getViews(int rowNum, int colNum) {
 		List<View> views = new ArrayList<View>();
-		EmojiListEmoticon generator = new EmojiListEmoticon();
-    	List<EmojiIcon> emojiList = generator.getIcons(this.context);
+		EmojiList list = new EmojiList(this.context);
+    	List<EmojiIcon> emojiList = list.getIcons(EmojiCodeMap.ALL);
 		int itemPerPage = rowNum * colNum - 1;
 		int pageNum = (emojiList.size() + itemPerPage - 1) / itemPerPage;
 		for (int i = 0; i < pageNum; ++i) {

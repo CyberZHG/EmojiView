@@ -19,10 +19,10 @@ public class MainActivity extends Activity {
 		
 		final EditText editText = (EditText) this.findViewById(R.id.emojiEditText);
 		this.emojiView = (EmojiView) this.findViewById(R.id.emojiView);
-		this.emojiView.init(editText);
+		this.emojiView.init(editText, 5, 8);
 		
 		final TextView textView = (TextView) this.findViewById(R.id.emojiTextView);
-		textView.setText("Emoji" + new String(Character.toChars((0x1F1E8 << 16) | 0x1F1F3)));
+		textView.setText("Emoji");
 		editText.addTextChangedListener(new TextWatcher() {
 
 			@Override
