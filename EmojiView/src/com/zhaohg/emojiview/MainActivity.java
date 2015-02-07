@@ -2,8 +2,11 @@ package com.zhaohg.emojiview;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	
@@ -14,9 +17,28 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		EditText edit = (EditText) this.findViewById(R.id.emojiEdit);
+		final EditText editText = (EditText) this.findViewById(R.id.emojiEditText);
 		this.emojiView = (EmojiView) this.findViewById(R.id.emojiView);
-		this.emojiView.init(edit);
+		this.emojiView.init(editText);
+		
+		final TextView textView = (TextView) this.findViewById(R.id.emojiTextView);
+		textView.setText("Emoji" + new String(Character.toChars((0x1F1E8 << 16) | 0x1F1F3)));
+		editText.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				textView.setText(editText.getText());
+			}
+			
+		});
 	}
 	
 	public void toggleEmojiView(View view) {

@@ -3,9 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/emojiTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16pt"/>
 
     <EditText
-        android:id="@+id/emojiEdit"
+        android:id="@+id/emojiEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/emoji_edit_hint"

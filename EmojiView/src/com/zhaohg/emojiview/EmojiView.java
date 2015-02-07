@@ -5,6 +5,7 @@ import java.util.List;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -33,6 +34,7 @@ public class EmojiView extends LinearLayout {
 	}
 
 	private void initView() {
+		this.setGravity(Gravity.FILL);
 		this.setOrientation(VERTICAL);
 		this.hide();
 	}
@@ -49,10 +51,17 @@ public class EmojiView extends LinearLayout {
 	}
 	
 	private void initPages() {
-		EmojiResourceManager manager = EmojiResourceManager.getInstance();
+		EmojiResourceManager manager = new EmojiResourceManager(this.getContext());
 		List<View> views = manager.getViews(rowNum, colNum);
+		for (View view : views) {
+			((EmojiPage)view).setEditText(edit);
+		}
 		ViewPager viewPager = new ViewPager(this.getContext());
 		viewPager.setAdapter(new EmojiPagerAdapter(views));
+		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, 
+				LayoutParams.MATCH_PARENT);
+		viewPager.setLayoutParams(params);
+		this.addView(viewPager);
 	}
 	
 	public void show() {
