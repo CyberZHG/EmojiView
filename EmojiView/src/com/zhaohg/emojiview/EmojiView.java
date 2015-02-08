@@ -5,7 +5,9 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -16,9 +18,12 @@ import android.widget.LinearLayout;
 public class EmojiView extends LinearLayout {
 	
 	private EditText edit;
+	private EmojiIndicator indicator;
 	private boolean initialized = false;
 	private boolean isHidden;
 	
+	private int indicatorDotsColor = Color.argb(200, 219, 229, 234);
+	private boolean showIndicatorDots = true;
 	private boolean autoHideSoftInput = true;
 	private int rowNum = 3;
 	private int colNum = 7;
@@ -45,15 +50,35 @@ public class EmojiView extends LinearLayout {
 		this.hide();
 		if (attrs != null) {
 			TypedArray values = this.getContext().obtainStyledAttributes(attrs, R.styleable.EmojiView);
+			this.setIndicatorDotsColor(values.getColor(R.styleable.EmojiView_indicatorDotsColor, Color.argb(200, 219, 229, 234)));
+			this.setShowIndicatorDots(values.getBoolean(R.styleable.EmojiView_showIndicatorDots, true));;
 			this.autoHideSoftInput = values.getBoolean(R.styleable.EmojiView_autoHideSoftInput, true);
 			this.rowNum = values.getInteger(R.styleable.EmojiView_rowNum, 3);
-			this.rowNum = values.getInteger(R.styleable.EmojiView_colNum, 7);
+			this.colNum = values.getInteger(R.styleable.EmojiView_colNum, 7);
 			values.recycle();
 		}
 	}
 	
 	public void setAutoHideSoftInput(boolean value) {
 		this.autoHideSoftInput = value;
+	}
+	
+	public void setIndicatorDotsColor(int color) {
+		this.indicatorDotsColor = color;
+		if (this.indicator != null) {
+			this.indicator.setDotsColor(color);
+		}
+	}
+	
+	public void setShowIndicatorDots(boolean value) {
+		this.showIndicatorDots = value;
+		if (this.indicator != null) {
+			if (value) {
+				this.indicator.setVisibility(VISIBLE);
+			} else {
+				this.indicator.setVisibility(GONE);
+			}
+		}
 	}
 	
 	public void setRowNum(int rowNum) {
@@ -112,10 +137,32 @@ public class EmojiView extends LinearLayout {
 		// Initialize view pager.
 		ViewPager viewPager = new ViewPager(this.getContext());
 		viewPager.setAdapter(new EmojiPagerAdapter(views));
-		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, 
-				LayoutParams.MATCH_PARENT);
+		LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 
+				LayoutParams.MATCH_PARENT, 5);
 		viewPager.setLayoutParams(params);
 		this.addView(viewPager);
+		// Initialize indicator dots.
+		this.indicator = new EmojiIndicator(this.getContext());
+		params = new LayoutParams(LayoutParams.MATCH_PARENT, 30);
+		this.indicator.setLayoutParams(params);
+		this.indicator.setCurrentIndex(0);
+		this.indicator.setTotalNum(pageNum);
+		viewPager.setOnPageChangeListener(new OnPageChangeListener() {
+
+			@Override
+			public void onPageScrollStateChanged(int arg0) {}
+
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {}
+
+			@Override
+			public void onPageSelected(int index) {
+				indicator.setCurrentIndex(index);
+				indicator.invalidate();
+			}
+		});
+		this.indicator.setDotsColor(this.indicatorDotsColor);
+		this.addView(this.indicator);
 	}
 	
 	public void show() {
@@ -124,6 +171,11 @@ public class EmojiView extends LinearLayout {
 		}
 		this.isHidden = false;
 		this.setVisibility(VISIBLE);
+		if (this.showIndicatorDots) {
+			if (this.indicator != null) {
+				this.indicator.setVisibility(VISIBLE);
+			}
+		}
 		if (this.autoHideSoftInput) {
 			InputMethodManager imm = (InputMethodManager) this.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 			imm.hideSoftInputFromWindow(this.getWindowToken(), 0);

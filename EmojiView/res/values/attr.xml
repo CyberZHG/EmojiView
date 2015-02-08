@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="EmojiView">
+        <attr name="indicatorDotsColor" format="color"/>
+        <attr name="showIndicatorDots" format="boolean"/>
         <attr name="autoHideSoftInput" format="boolean"/>
         <attr name="rowNum" format="integer"/>
         <attr name="colNum" format="integer"/>
