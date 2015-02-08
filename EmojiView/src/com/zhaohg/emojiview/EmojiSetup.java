@@ -21,7 +21,7 @@ public class EmojiSetup {
 			long firstUnicode = Character.codePointAt(text, i);
 			if (EmojiCodeMap.exists(firstUnicode)) {
 				drawableId = EmojiCodeMap.getDrawableID(firstUnicode);
-			} else if (i < text.length() - 1) {
+			} else if (i < start + length - 1) {
 				long secondUnicode = Character.codePointAt(text, i + 1);
 				long code = ((firstUnicode) << 32) | secondUnicode;
 				if (EmojiCodeMap.exists(code)) {

@@ -176,6 +176,7 @@ public class EmojiView extends LinearLayout {
 	
 	public void show() {
 		if (!this.initialized) {
+			this.initialized = true;
 			initPages();
 		}
 		this.isHidden = false;

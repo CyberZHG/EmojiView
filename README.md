@@ -10,8 +10,11 @@ Emoji View
 
 #### EmojiView
 
+![EmojiView](https://cloud.githubusercontent.com/assets/853842/6096482/a274338e-afcd-11e4-9e27-73ea324166d9.png)
+
 - The process of resources loading is lazy.
 - The number of rows and columns could be customized.
+- Navigator dots on the bottom.
 
 ## Acknowledgement
 

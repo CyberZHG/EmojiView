@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="5"
-        android:textSize="20sp"/>
+        android:textSize="26sp"/>
     
     <LinearLayout 
         android:layout_width="match_parent"
@@ -29,6 +29,7 @@
 	        android:id="@+id/emojiEditText"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
+	        android:textSize="26sp"
 	        android:hint="@string/emoji_edit_hint"
 	        android:ems="10" >
 	        <requestFocus />
@@ -39,7 +40,7 @@
     <com.zhaohg.emojiview.EmojiView
         android:id="@+id/emojiView"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="190dp"
         emoji:showIndicatorDots="true"
         emoji:autoHideSoftInput="true"
         emoji:rowNum="4"
