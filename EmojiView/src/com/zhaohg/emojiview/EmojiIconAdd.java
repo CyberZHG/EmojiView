@@ -2,16 +2,17 @@ package com.zhaohg.emojiview;
 
 import android.content.Context;
 import android.text.Editable;
-import android.view.MotionEvent;
-import android.view.View;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.widget.EditText;
 
 public class EmojiIconAdd extends EmojiIcon {
 	
+	private long emojiCode;
 	private String emojiText = ""; 
 	
-	public EmojiIconAdd(Context context) {
-		super(context);
-		this.initListener();
+	public EmojiIconAdd(Context context, EmojiView emojiView) {
+		super(context, emojiView);
 	}
 	
 	private String convertCodeToString(int code) {
@@ -19,6 +20,7 @@ public class EmojiIconAdd extends EmojiIcon {
 	}
 	
 	public void setEmojiCode(long code) {
+		this.emojiCode = code;
 		if ((code | 0xffffffff00000000L) == 0) {
 			this.setEmojiText(convertCodeToString((int)code));
 		} else {
@@ -32,38 +34,20 @@ public class EmojiIconAdd extends EmojiIcon {
 		this.emojiText = text;
 	}
 	
-	public void addEmojiText() {
-		if (this.edit != null) {
-			int index = this.edit.getSelectionStart();
+	@Override
+	public void onActionUp() {
+		EditText edit = this.emojiView.getEditText();
+		if (edit != null) {
+			int index = edit.getSelectionStart();
 			if (index >= 0) {
-				Editable editable = this.edit.getEditableText();
-				editable.insert(index, this.emojiText);
+				SpannableStringBuilder builder = new SpannableStringBuilder();
+				builder.append(edit.getText());
+				builder.insert(index, this.emojiText);
+				int drawableId = EmojiCodeMap.getDrawableID(this.emojiCode);
+				EmojiSpan span = new EmojiSpan(this.getContext(), drawableId, (int) edit.getTextSize());
+				builder.setSpan(span, index, index + this.emojiText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+				edit.setText(builder);
 			}
 		}
-	}
-	
-	public void initListener() {
-		this.setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(View view, MotionEvent event) {
-				EmojiIconAdd self = (EmojiIconAdd) view;
-				switch (event.getAction()) {
-				case MotionEvent.ACTION_DOWN:
-				case MotionEvent.ACTION_HOVER_ENTER:
-					self.activate();
-					break;
-                case MotionEvent.ACTION_CANCEL:
-                case MotionEvent.ACTION_OUTSIDE:
-				case MotionEvent.ACTION_HOVER_EXIT:
-					self.inactivate();
-					break;
-				case MotionEvent.ACTION_UP:
-					self.inactivate();
-					self.addEmojiText();
-					break;
-				}
-				return false;
-			}
-		});
 	}
 }

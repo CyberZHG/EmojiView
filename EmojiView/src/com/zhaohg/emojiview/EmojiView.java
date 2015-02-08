@@ -1,5 +1,6 @@
 package com.zhaohg.emojiview;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -55,6 +56,14 @@ public class EmojiView extends LinearLayout {
 		this.autoHideSoftInput = value;
 	}
 	
+	public void setRowNum(int rowNum) {
+		this.setIconNum(rowNum, this.colNum);
+	}
+	
+	public void setColNum(int colNum) {
+		this.setIconNum(this.rowNum, colNum);
+	}
+	
 	public void setIconNum(int rowNum, int colNum) {
 		if (this.rowNum != rowNum || this.colNum != colNum) {
 			this.rowNum = rowNum;
@@ -67,16 +76,40 @@ public class EmojiView extends LinearLayout {
 		}
 	}
 	
+	public int getRowNum() {
+		return this.rowNum;
+	}
+	
+	public int getColNum() {
+		return this.colNum;
+	}
+	
 	public void setEditText(EditText edit) {
 		this.edit = edit;
 	}
 	
+	public EditText getEditText() {
+		return this.edit;
+	}
+	
 	private void initPages() {
-		EmojiResourceManager manager = new EmojiResourceManager(this.getContext());
-		List<View> views = manager.getViews(rowNum, colNum);
-		for (View view : views) {
-			((EmojiPage)view).setEditText(edit);
+		// Initialize sub pages.
+		List<View> views = new ArrayList<View>();
+		EmojiList list = new EmojiList(this.getContext());
+    	List<EmojiIcon> emojiList = list.getIcons(this, EmojiCodeMap.PEOPLE);
+		int itemPerPage = rowNum * colNum - 1;
+		int pageNum = (emojiList.size() + itemPerPage - 1) / itemPerPage;
+		for (int i = 0; i < pageNum; ++i) {
+			EmojiPage page = new EmojiPage(this.getContext(), this);
+			int start = i * itemPerPage;
+			int end = start + itemPerPage;
+			if (end > emojiList.size()) {
+				end = emojiList.size();
+			}
+			page.initIcons(rowNum, colNum, emojiList.subList(start, end));
+			views.add(page);
 		}
+		// Initialize view pager.
 		ViewPager viewPager = new ViewPager(this.getContext());
 		viewPager.setAdapter(new EmojiPagerAdapter(views));
 		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, 
@@ -108,5 +141,9 @@ public class EmojiView extends LinearLayout {
 		} else {
 			hide();
 		}
+	}
+	
+	public void setActiveIcon(EmojiIcon icon) {
+		// TODO
 	}
 }

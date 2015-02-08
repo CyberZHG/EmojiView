@@ -22,7 +22,6 @@ public class MainActivity extends Activity {
 		this.emojiView.setEditText(editText);
 		
 		final TextView textView = (TextView) this.findViewById(R.id.emojiTextView);
-		textView.setText("Emoji");
 		editText.addTextChangedListener(new TextWatcher() {
 
 			@Override

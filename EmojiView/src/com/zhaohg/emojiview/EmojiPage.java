@@ -4,17 +4,20 @@ import java.util.List;
 
 import android.content.Context;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 
 public class EmojiPage extends LinearLayout {
 	
+	private EmojiView emojiView;
 	private EmojiIcon[][] icons;
 	
-	public EmojiPage(Context context) {
+	public EmojiPage(Context context, EmojiView emojiView) {
 		super(context);
+		this.emojiView = emojiView;
+		this.initListener();
 	}
 	
 	public void initIcons(int rowNum, int colNum, List<EmojiIcon> icons) {
@@ -33,7 +36,8 @@ public class EmojiPage extends LinearLayout {
 			for (int j = 0; j < colNum; ++j) {
 				View icon;
 				if (i == rowNum - 1 && j == colNum - 1) {
-					icon = new EmojiIconDelete(this.getContext());
+					icon = new EmojiIconDelete(this.getContext(), this.emojiView);
+					this.icons[i][j] = (EmojiIcon) icon;
 				} else {
 					int index = i * colNum + j;
 					if (index < icons.size()) {
@@ -52,14 +56,51 @@ public class EmojiPage extends LinearLayout {
 		}
 	}
 	
-	public void setEditText(EditText edit) {
-		for (int i = 0; i < this.icons.length; ++i) {
-			for (int j = 0; j < this.icons[i].length; ++j) {
-				if (this.icons[i][j] != null) {
-					this.icons[i][j].setEditText(edit);
+	public EmojiView getEmojiView() {
+		return this.emojiView;
+	}
+	
+	public void initListener() {
+		this.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View view, MotionEvent event) {
+				EmojiPage self = (EmojiPage) view;
+				int action = event.getAction();
+				EmojiIcon activeIcon = null;
+				if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_UP) {
+					int height = view.getHeight();
+					int width = view.getWidth();
+					int rowNum = self.getEmojiView().getRowNum();
+					int colNum = self.getEmojiView().getColNum();
+					float cellHeight = 1.0f * height / rowNum;
+					float cellWidth = 1.0f * width / colNum;
+					float x = event.getX();
+					float y = event.getY();
+					int row = Math.round(y / cellHeight - 0.5f);
+					int col = Math.round(x / cellWidth - 0.5f);
+					if (row >= 0 && row < rowNum) {
+						if (col >= 0 && col < colNum) {
+							activeIcon = self.icons[row][col];
+						}
+					}
 				}
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					self.getEmojiView().setActiveIcon(activeIcon);
+					return true;
+				case MotionEvent.ACTION_UP:
+					if (activeIcon != null) {
+						activeIcon.onActionUp();
+					}
+					self.getEmojiView().setActiveIcon(null);
+					return true;
+				case MotionEvent.ACTION_CANCEL:
+					self.getEmojiView().setActiveIcon(null);
+					return false;
+				}
+				return false;
 			}
-		}
+		});
 	}
 
 }

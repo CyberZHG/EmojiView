@@ -1,16 +1,15 @@
 package com.zhaohg.emojiview;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.widget.EditText;
 import android.widget.ImageView;
 
 public class EmojiIcon extends ImageView {
 	
-	protected EditText edit;
+	protected EmojiView emojiView;
 	
-	public EmojiIcon(Context context) {
+	public EmojiIcon(Context context, EmojiView emojiView) {
 		super(context);
+		this.emojiView = emojiView;
 		this.initView();
 	}
 	
@@ -18,19 +17,6 @@ public class EmojiIcon extends ImageView {
 		this.setScaleType(ScaleType.FIT_CENTER);
 	}
 	
-	public EditText getEditText() {
-		return this.edit;
-	}
-	
-	public void setEditText(EditText edit) {
-		this.edit = edit;
-	}
-	
-	protected void activate() {
-		this.setBackgroundColor(Color.BLUE);
-	}
-	
-	protected void inactivate() {
-		this.setBackgroundColor(Color.TRANSPARENT);
+	public void onActionUp() {
 	}
 }
