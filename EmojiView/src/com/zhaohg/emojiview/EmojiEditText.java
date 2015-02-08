@@ -20,10 +20,10 @@ public class EmojiEditText extends EditText {
 	
 	@Override
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
-        this.setupEmoji();
+        this.setupEmoji(start, lengthAfter);
     }
-
-	private void setupEmoji() {
-		EmojiSetup.setupEmoji(this.getContext(), this.getText(), (int)this.getTextSize());
+	
+	private void setupEmoji(int start, int length) {
+		EmojiSetup.setupEmoji(this.getContext(), this.getText(), (int)this.getTextSize(), start, length);
 	}
 }

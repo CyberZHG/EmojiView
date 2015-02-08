@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void afterTextChanged(Editable s) {
-				textView.setText(editText.getText());
+				textView.setText(editText.getText().toString());
 			}
 			
 		});

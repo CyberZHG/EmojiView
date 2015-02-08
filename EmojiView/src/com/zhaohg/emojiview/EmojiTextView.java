@@ -1,6 +1,7 @@
 package com.zhaohg.emojiview;
 
 import android.content.Context;
+import android.text.SpannableStringBuilder;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -20,11 +21,8 @@ public class EmojiTextView extends TextView {
 
 	@Override
 	public void setText(CharSequence text, BufferType type) {
-		setupEmoji();
-		super.setText(text, type);
-	}
-	
-	private void setupEmoji() {
-		//EmojiSetup.setupEmoji(this.getContext(), this.getText());
+        SpannableStringBuilder builder = new SpannableStringBuilder(text);
+        EmojiSetup.setupEmoji(this.getContext(), builder, (int) this.getTextSize());
+		super.setText(builder, type);
 	}
 }
