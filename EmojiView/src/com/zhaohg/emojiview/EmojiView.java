@@ -120,18 +120,17 @@ public class EmojiView extends LinearLayout {
 	private void initPages() {
 		// Initialize sub pages.
 		final List<View> views = new ArrayList<View>();
-		EmojiList list = new EmojiList(this.getContext());
-    	List<EmojiIcon> emojiList = list.getIcons(this, EmojiCodeMap.PEOPLE);
+    	long[] codeList = EmojiCodeMap.getCodeList(EmojiCodeMap.ALL);
 		int itemPerPage = rowNum * colNum - 1;
-		int pageNum = (emojiList.size() + itemPerPage - 1) / itemPerPage;
+		int pageNum = (codeList.length + itemPerPage - 1) / itemPerPage;
 		for (int i = 0; i < pageNum; ++i) {
 			EmojiPage page = new EmojiPage(this.getContext(), this);
 			int start = i * itemPerPage;
 			int end = start + itemPerPage;
-			if (end > emojiList.size()) {
-				end = emojiList.size();
+			if (end > codeList.length) {
+				end = codeList.length;
 			}
-			page.setConfiguration(rowNum, colNum, emojiList.subList(start, end));
+			page.setConfiguration(rowNum, colNum, codeList, start);
 			views.add(page);
 		}
 		if (pageNum >= 1) {

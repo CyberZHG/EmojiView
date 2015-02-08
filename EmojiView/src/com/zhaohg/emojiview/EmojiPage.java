@@ -1,7 +1,5 @@
 package com.zhaohg.emojiview;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -14,8 +12,8 @@ public class EmojiPage extends LinearLayout {
 	private EmojiView emojiView;
 	
 	private boolean initialized = false;
-	private int rowNum, colNum;
-	private List<EmojiIcon> iconList;
+	private int rowNum, colNum, start;
+	private long[] codeList;
 	private EmojiIcon[][] icons;
 	
 	public EmojiPage(Context context, EmojiView emojiView) {
@@ -24,10 +22,15 @@ public class EmojiPage extends LinearLayout {
 		this.initListener();
 	}
 	
-	public void setConfiguration(int rowNum, int colNum, List<EmojiIcon> iconList) {
+	public EmojiView getEmojiView() {
+		return this.emojiView;
+	}
+	
+	public void setConfiguration(int rowNum, int colNum, long[] codeList, int start) {
 		this.rowNum = rowNum;
 		this.colNum = colNum;
-		this.iconList = iconList;
+		this.start = start;
+		this.codeList = codeList;
 		this.icons = new EmojiIcon[rowNum][colNum];
 	}
 	
@@ -55,9 +58,11 @@ public class EmojiPage extends LinearLayout {
 					this.icons[i][j] = (EmojiIcon) icon;
 				} else {
 					int index = i * colNum + j;
-					if (index < iconList.size()) {
-						icon = iconList.get(index);
-						this.icons[i][j] = iconList.get(index);
+					if (index < codeList.length) {
+						long code = codeList[start + index];
+						int id = EmojiCodeMap.getDrawableID(code);
+						icon = newIcon(emojiView, code, id);
+						this.icons[i][j] = (EmojiIcon) icon;
 					} else {
 						icon = new View(this.getContext());
 					}
@@ -71,8 +76,11 @@ public class EmojiPage extends LinearLayout {
 		}
 	}
 	
-	public EmojiView getEmojiView() {
-		return this.emojiView;
+	protected EmojiIcon newIcon(EmojiView emojiView, long code, int id) {
+		EmojiIconAdd icon = new EmojiIconAdd(this.getContext(), emojiView);
+		icon.setEmojiCode(code);
+		icon.setImageDrawable(this.getContext().getResources().getDrawable(id));
+		return icon;
 	}
 	
 	public void initListener() {
