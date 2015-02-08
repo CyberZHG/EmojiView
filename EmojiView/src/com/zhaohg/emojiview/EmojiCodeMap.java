@@ -20,6 +20,10 @@ public class EmojiCodeMap {
 	private static long[] placesList;
 	private static long[] symbolsList;
 	
+	public static boolean exists(long code) {
+		return all.get(code) != null;
+	}
+	
 	public static int getDrawableID(long code) {
 		return all.get(code);
 	}

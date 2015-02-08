@@ -19,11 +19,11 @@ public class EmojiEditText extends EditText {
 	}
 	
 	@Override
-	public void setText(CharSequence text, BufferType type) {
-		setupEmoji();
-	}
+    protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
+        this.setupEmoji();
+    }
 
 	private void setupEmoji() {
-		// TODO
+		EmojiSetup.setupEmoji(this.getContext(), this.getText(), (int)this.getTextSize());
 	}
 }

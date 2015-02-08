@@ -21,9 +21,10 @@ public class EmojiTextView extends TextView {
 	@Override
 	public void setText(CharSequence text, BufferType type) {
 		setupEmoji();
+		super.setText(text, type);
 	}
 	
 	private void setupEmoji() {
-		// TODO
+		//EmojiSetup.setupEmoji(this.getContext(), this.getText());
 	}
 }
