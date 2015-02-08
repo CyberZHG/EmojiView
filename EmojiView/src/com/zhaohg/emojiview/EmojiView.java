@@ -119,7 +119,7 @@ public class EmojiView extends LinearLayout {
 	
 	private void initPages() {
 		// Initialize sub pages.
-		List<View> views = new ArrayList<View>();
+		final List<View> views = new ArrayList<View>();
 		EmojiList list = new EmojiList(this.getContext());
     	List<EmojiIcon> emojiList = list.getIcons(this, EmojiCodeMap.PEOPLE);
 		int itemPerPage = rowNum * colNum - 1;
@@ -131,8 +131,14 @@ public class EmojiView extends LinearLayout {
 			if (end > emojiList.size()) {
 				end = emojiList.size();
 			}
-			page.initIcons(rowNum, colNum, emojiList.subList(start, end));
+			page.setConfiguration(rowNum, colNum, emojiList.subList(start, end));
 			views.add(page);
+		}
+		if (pageNum >= 1) {
+			((EmojiPage)views.get(0)).initIcons();
+			if (pageNum >= 2) {
+				((EmojiPage)views.get(1)).initIcons();
+			}
 		}
 		// Initialize view pager.
 		ViewPager viewPager = new ViewPager(this.getContext());
@@ -159,6 +165,9 @@ public class EmojiView extends LinearLayout {
 			public void onPageSelected(int index) {
 				indicator.setCurrentIndex(index);
 				indicator.invalidate();
+				if (index < views.size() - 1) {
+					((EmojiPage)views.get(index + 1)).initIcons();
+				}
 			}
 		});
 		this.indicator.setDotsColor(this.indicatorDotsColor);

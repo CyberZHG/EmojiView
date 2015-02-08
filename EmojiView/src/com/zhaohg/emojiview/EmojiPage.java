@@ -12,6 +12,10 @@ import android.widget.LinearLayout;
 public class EmojiPage extends LinearLayout {
 	
 	private EmojiView emojiView;
+	
+	private boolean initialized = false;
+	private int rowNum, colNum;
+	private List<EmojiIcon> iconList;
 	private EmojiIcon[][] icons;
 	
 	public EmojiPage(Context context, EmojiView emojiView) {
@@ -20,7 +24,18 @@ public class EmojiPage extends LinearLayout {
 		this.initListener();
 	}
 	
-	public void initIcons(int rowNum, int colNum, List<EmojiIcon> icons) {
+	public void setConfiguration(int rowNum, int colNum, List<EmojiIcon> iconList) {
+		this.rowNum = rowNum;
+		this.colNum = colNum;
+		this.iconList = iconList;
+		this.icons = new EmojiIcon[rowNum][colNum];
+	}
+	
+	public void initIcons() {
+		if (this.initialized) {
+			return;
+		}
+		this.initialized = true;
 		this.icons = new EmojiIcon[rowNum][colNum];
 		this.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 
 				ViewGroup.LayoutParams.MATCH_PARENT));
@@ -40,9 +55,9 @@ public class EmojiPage extends LinearLayout {
 					this.icons[i][j] = (EmojiIcon) icon;
 				} else {
 					int index = i * colNum + j;
-					if (index < icons.size()) {
-						icon = icons.get(index);
-						this.icons[i][j] = icons.get(index);
+					if (index < iconList.size()) {
+						icon = iconList.get(index);
+						this.icons[i][j] = iconList.get(index);
 					} else {
 						icon = new View(this.getContext());
 					}
