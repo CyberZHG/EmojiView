@@ -9,23 +9,34 @@
         android:id="@+id/emojiTextView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"/>
-
-    <com.zhaohg.emojiview.EmojiEditText
-        android:id="@+id/emojiEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/emoji_edit_hint"
-        android:ems="10" >
-        <requestFocus />
-    </com.zhaohg.emojiview.EmojiEditText>
+        android:layout_weight="5"
+        android:textSize="20sp"/>
     
-    <Button 
-        android:id="@+id/emojiButton"
+    <LinearLayout 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/emoji_button_text"
-        android:onClick="toggleEmojiView"/>
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal">
+        
+        <ImageView 
+            android:id="@+id/emojiButton"
+            android:contentDescription="@string/emoji_button_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:minWidth="40dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/emoji_1f631"
+            android:onClick="toggleEmojiView"/>
+
+	    <com.zhaohg.emojiview.EmojiEditText
+	        android:id="@+id/emojiEditText"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:hint="@string/emoji_edit_hint"
+	        android:ems="10" >
+	        <requestFocus />
+	    </com.zhaohg.emojiview.EmojiEditText>
+	    
+    </LinearLayout>
     
     <com.zhaohg.emojiview.EmojiView
         android:id="@+id/emojiView"

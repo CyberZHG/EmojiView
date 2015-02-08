@@ -9,6 +9,7 @@ public class EmojiSpan extends DynamicDrawableSpan {
 	private Drawable drawable;
 	
 	public EmojiSpan(Context context, int drawableId, int size) {
+		super(DynamicDrawableSpan.ALIGN_BOTTOM);
 		this.drawable = context.getResources().getDrawable(drawableId);
 		this.drawable.setBounds(0, 0, size, size);
 	}
