@@ -3,10 +3,12 @@ package com.zhaohg.emojiview;
 import java.util.List;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -15,39 +17,58 @@ public class EmojiView extends LinearLayout {
 	private EditText edit;
 	private boolean initialized = false;
 	private boolean isHidden;
-	private int rowNum;
-	private int colNum;
+	
+	private boolean autoHideSoftInput = true;
+	private int rowNum = 3;
+	private int colNum = 7;
 	
 	public EmojiView(Context context) {
 		super(context);
-		this.initView();
+		this.initView(null);
 	}
 	
 	public EmojiView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		this.initView();
+		this.initView(attrs);
 	}
 	
 	public EmojiView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		this.initView();
+		this.initView(attrs);
 	}
 
-	private void initView() {
+	private void initView(AttributeSet attrs) {
 		this.setGravity(Gravity.FILL);
 		this.setOrientation(VERTICAL);
+		this.setFocusable(false);
 		this.hide();
+		if (attrs != null) {
+			TypedArray values = this.getContext().obtainStyledAttributes(attrs, R.styleable.EmojiView);
+			this.autoHideSoftInput = values.getBoolean(R.styleable.EmojiView_autoHideSoftInput, true);
+			this.rowNum = values.getInteger(R.styleable.EmojiView_rowNum, 3);
+			this.rowNum = values.getInteger(R.styleable.EmojiView_colNum, 7);
+			values.recycle();
+		}
 	}
 	
-	public void init(EditText edit) {
-		this.init(edit, 3, 7);
+	public void setAutoHideSoftInput(boolean value) {
+		this.autoHideSoftInput = value;
 	}
 	
-	public void init(EditText edit, int rowNum, int colNum) {
-		this.hide();
+	public void setIconNum(int rowNum, int colNum) {
+		if (this.rowNum != rowNum || this.colNum != colNum) {
+			this.rowNum = rowNum;
+			this.colNum = colNum;
+			if (this.isHidden) {
+				this.initialized = false;
+			} else {
+				this.initPages();
+			}
+		}
+	}
+	
+	public void setEditText(EditText edit) {
 		this.edit = edit;
-		this.rowNum = rowNum;
-		this.colNum = colNum;
 	}
 	
 	private void initPages() {
@@ -70,6 +91,10 @@ public class EmojiView extends LinearLayout {
 		}
 		this.isHidden = false;
 		this.setVisibility(VISIBLE);
+		if (this.autoHideSoftInput) {
+			InputMethodManager imm = (InputMethodManager) this.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(this.getWindowToken(), 0);
+		}
 	}
 	
 	public void hide() {

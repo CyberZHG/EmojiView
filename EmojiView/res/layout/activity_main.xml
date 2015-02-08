@@ -2,12 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:layout_gravity="fill">
     
     <TextView
         android:id="@+id/emojiTextView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="0dp"
+        android:layout_weight="5"/>
 
     <EditText
         android:id="@+id/emojiEditText"
@@ -28,7 +30,10 @@
     <com.zhaohg.emojiview.EmojiView
         android:id="@+id/emojiView"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:background="#EDEDED"/>
+        android:layout_height="240dp"
+        android:background="#EDEDED"
+        autoHideSoftInput="true"
+        rowNum="6"
+        colNum="8"/>
 
 </LinearLayout>

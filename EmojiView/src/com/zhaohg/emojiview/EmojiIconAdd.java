@@ -52,6 +52,8 @@ public class EmojiIconAdd extends EmojiIcon {
 				case MotionEvent.ACTION_HOVER_ENTER:
 					self.activate();
 					break;
+                case MotionEvent.ACTION_CANCEL:
+                case MotionEvent.ACTION_OUTSIDE:
 				case MotionEvent.ACTION_HOVER_EXIT:
 					self.inactivate();
 					break;

@@ -17,7 +17,7 @@ public class EmojiResourceManager {
 	public List<View> getViews(int rowNum, int colNum) {
 		List<View> views = new ArrayList<View>();
 		EmojiList list = new EmojiList(this.context);
-    	List<EmojiIcon> emojiList = list.getIcons(EmojiCodeMap.ALL);
+    	List<EmojiIcon> emojiList = list.getIcons(EmojiCodeMap.PEOPLE);
 		int itemPerPage = rowNum * colNum - 1;
 		int pageNum = (emojiList.size() + itemPerPage - 1) / itemPerPage;
 		for (int i = 0; i < pageNum; ++i) {

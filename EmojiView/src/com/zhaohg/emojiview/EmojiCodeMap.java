@@ -10,7 +10,7 @@ public class EmojiCodeMap {
 	public static final int NATURE = 3;
 	public static final int OBJECTS = 4;
 	public static final int SYMBOLS = 5;
-	
+
 	private static LongSparseArray<Integer> all = new LongSparseArray<Integer>();
 	
 	private static long[] allList;

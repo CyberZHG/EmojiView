@@ -7,10 +7,9 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TableLayout;
-import android.widget.TableRow;
+import android.widget.LinearLayout;
 
-public class EmojiPage extends TableLayout {
+public class EmojiPage extends LinearLayout {
 	
 	private EmojiIcon[][] icons;
 	
@@ -23,12 +22,14 @@ public class EmojiPage extends TableLayout {
 		this.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 
 				ViewGroup.LayoutParams.MATCH_PARENT));
 		this.setOrientation(VERTICAL);
-		this.setStretchAllColumns(true);
+		this.setGravity(Gravity.FILL);
 		this.setWeightSum(rowNum);
 		for (int i = 0; i < rowNum; ++i) {
-			TableRow row = new TableRow(this.getContext());
-			row.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1));
+			LinearLayout row = new LinearLayout(this.getContext());
+			row.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1));
+			row.setOrientation(HORIZONTAL);
 			row.setGravity(Gravity.FILL);
+			row.setWeightSum(colNum);
 			for (int j = 0; j < colNum; ++j) {
 				View icon;
 				if (i == rowNum - 1 && j == colNum - 1) {
@@ -42,7 +43,9 @@ public class EmojiPage extends TableLayout {
 						icon = new View(this.getContext());
 					}
 				}
-				icon.setPadding(2, 2, 2, 2);
+				icon.setPadding(4, 4, 4, 4);
+				icon.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 
+						ViewGroup.LayoutParams.MATCH_PARENT, 1));
 				row.addView(icon);
 			}
 			this.addView(row);
