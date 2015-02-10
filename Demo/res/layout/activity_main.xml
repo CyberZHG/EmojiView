@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:emoji="http://schemas.android.com/apk/res/zhaohg.emojiviewdemo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="fill">
+    
+    <zhaohg.emojiview.EmojiTextView
+        android:id="@+id/emojiTextView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:textSize="26sp"/>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal">
+        
+        <Button 
+            android:id="@+id/emojiButton"
+            android:text="@string/emoji_button_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="toggleEmojiView"/>
+
+	    <zhaohg.emojiview.EmojiEditText
+	        android:id="@+id/emojiEditText"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:textSize="26sp"
+	        android:hint="@string/emoji_edit_hint"
+	        android:ems="10" >
+	        <requestFocus />
+	    </zhaohg.emojiview.EmojiEditText>
+	    
+    </LinearLayout>
+    
+    <zhaohg.emojiview.EmojiViewEx
+        android:id="@+id/emojiView"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:background="#EEEEEE"
+        emoji:indicatorDotsColor="#222222"
+        emoji:categoryHeight="40dp"/>
+
+</LinearLayout>

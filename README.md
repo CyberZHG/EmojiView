@@ -4,7 +4,8 @@ Emoji View
 ## Features
 
 * There are 845 emoji characters.
-* __EmojiView__: used for selecting and entering emoji characters.
+* __EmojiView__: used for selecting and entering emoji characters in _one_ category.
+* __EmojiViewEx__: used for selecting and entering emoji characters in _all_ category.
 * __EmojiEditView__ & __EmojiTextView__: used for editing and showing texts with emoji respectively.
 * Emoji characters are encoded in corresponding Unicode.
 
