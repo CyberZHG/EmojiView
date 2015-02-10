@@ -18,6 +18,10 @@ public class EmojiPage extends LinearLayout {
 	
 	public EmojiPage(Context context, EmojiView emojiView) {
 		super(context);
+		this.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 
+				ViewGroup.LayoutParams.MATCH_PARENT));
+		this.setOrientation(VERTICAL);
+		this.setGravity(Gravity.FILL);
 		this.emojiView = emojiView;
 		this.initListener();
 	}
@@ -39,11 +43,6 @@ public class EmojiPage extends LinearLayout {
 			return;
 		}
 		this.initialized = true;
-		this.icons = new EmojiIcon[rowNum][colNum];
-		this.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 
-				ViewGroup.LayoutParams.MATCH_PARENT));
-		this.setOrientation(VERTICAL);
-		this.setGravity(Gravity.FILL);
 		this.setWeightSum(rowNum);
 		for (int i = 0; i < rowNum; ++i) {
 			LinearLayout row = new LinearLayout(this.getContext());
