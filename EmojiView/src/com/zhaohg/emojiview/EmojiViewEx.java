@@ -2,10 +2,11 @@ package com.zhaohg.emojiview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,7 +22,13 @@ public class EmojiViewEx extends LinearLayout {
 	private EmojiView[] emojiViews;
 	private float currentCategory = EmojiCategory.PEOPLE;
 	
-	private int categoryHeight = 50;
+	private int indicatorDotsColor = EmojiDefault.INDICATOR_DOTS_COLOR;
+	private boolean showIndicatorDots = EmojiDefault.SHOW_INDICATOR_DOTS;
+	private boolean autoHideSoftInput = EmojiDefault.AUTO_HIDE_SOFT_INPUT;
+	private int rowNum = EmojiDefault.ROW_NUM;
+	private int colNum = EmojiDefault.COL_NUM;
+	
+	private int categoryHeight = 30;
 	
 	public EmojiViewEx(Context context) {
 		super(context);
@@ -41,12 +48,22 @@ public class EmojiViewEx extends LinearLayout {
 	public void initView(AttributeSet attrs) {
 		this.attrs = attrs;
 		this.hide();
+		if (attrs != null) {
+			TypedArray values = this.getContext().obtainStyledAttributes(attrs, R.styleable.EmojiView);
+			this.setIndicatorDotsColor(values.getColor(R.styleable.EmojiView_indicatorDotsColor, EmojiDefault.INDICATOR_DOTS_COLOR));
+			this.setShowIndicatorDots(values.getBoolean(R.styleable.EmojiView_showIndicatorDots, EmojiDefault.SHOW_INDICATOR_DOTS));;
+			this.autoHideSoftInput = values.getBoolean(R.styleable.EmojiView_autoHideSoftInput, EmojiDefault.AUTO_HIDE_SOFT_INPUT);
+			this.rowNum = values.getInteger(R.styleable.EmojiView_rowNum, EmojiDefault.ROW_NUM);
+			this.colNum = values.getInteger(R.styleable.EmojiView_colNum, EmojiDefault.COL_NUM);
+			values.recycle();
+		}
 	}
 	
 	public void initPages() {
 		this.setGravity(Gravity.FILL);
 		this.setOrientation(VERTICAL);
 		this.setFocusable(false);
+		this.setWeightSum(1);
 		if (attrs != null) {
 			TypedArray values = this.getContext().obtainStyledAttributes(attrs, R.styleable.EmojiView);
 			this.categoryHeight = (int) values.getDimension(R.styleable.EmojiView_categoryHeight, 50);
@@ -55,11 +72,15 @@ public class EmojiViewEx extends LinearLayout {
 		
 		this.emojiViews = new EmojiView[5];
 		for (int i = 0; i < 5; ++i) {
-			this.emojiViews[i] = new EmojiView(this.getContext(), this.attrs);
+			this.emojiViews[i] = new EmojiView(this.getContext());
 			this.emojiViews[i].setCategory(i);
 			LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, 0, 1);
 			this.emojiViews[i].setLayoutParams(params);
 			this.emojiViews[i].setEditText(edit);
+			this.emojiViews[i].setAutoHideSoftInput(false);
+			this.emojiViews[i].setShowIndicatorDots(this.showIndicatorDots);
+			this.emojiViews[i].setIndicatorDotsColor(this.indicatorDotsColor);
+			this.emojiViews[i].setIconNum(this.rowNum, this.colNum);
 			this.addView(this.emojiViews[i]);
 		}
 		
@@ -121,6 +142,10 @@ public class EmojiViewEx extends LinearLayout {
 				this.emojiViews[i].hide();
 			}
 		}
+		if (this.autoHideSoftInput) {
+			InputMethodManager imm = (InputMethodManager) this.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(this.getWindowToken(), 0);
+		}
 		this.isHidden = false;
 		this.setVisibility(VISIBLE);
 	}
@@ -138,18 +163,53 @@ public class EmojiViewEx extends LinearLayout {
 		}
 	}
 	
-	public void setEditText(EditText edit) {
-		this.edit = edit;
-		if (this.emojiViews != null) {
-			for (int i = 0; i < this.emojiViews.length; ++i) {
-				this.emojiViews[i].setEditText(edit);
-			}
-		}
-	}
-	
 	public void setCurrentCategory(int category) {
 		this.currentCategory = category;
 		this.show();
 	}
 	
+	public void setEditText(EditText edit) {
+		this.edit = edit;
+		if (this.emojiViews != null) {
+			for (EmojiView view : this.emojiViews) {
+				view.setEditText(edit);
+			}
+		}
+	}
+	
+	public void setIndicatorDotsColor(int color) {
+		this.indicatorDotsColor = color;
+		if (this.emojiViews != null) {
+			for (EmojiView view : this.emojiViews) {
+				view.setIndicatorDotsColor(color);
+			}
+		}
+	}
+	
+	public void setShowIndicatorDots(boolean value) {
+		this.showIndicatorDots = value;
+		if (this.emojiViews != null) {
+			for (EmojiView view : this.emojiViews) {
+				view.setShowIndicatorDots(value);
+			}
+		}
+	}
+	
+	public void setRowNum(int rowNum) {
+		this.setIconNum(rowNum, this.colNum);
+	}
+	
+	public void setColNum(int colNum) {
+		this.setIconNum(this.rowNum, colNum);
+	}
+	
+	public void setIconNum(int rowNum, int colNum) {
+		this.rowNum = rowNum;
+		this.colNum = colNum;
+		if (this.emojiViews != null) {
+			for (EmojiView view : this.emojiViews) {
+				view.setIconNum(rowNum, colNum);
+			}
+		}
+	}
 }

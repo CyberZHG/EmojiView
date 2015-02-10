@@ -22,12 +22,12 @@ public class EmojiView extends LinearLayout {
 	private boolean initialized = false;
 	private boolean isHidden;
 	
-	private int category = EmojiCategory.PEOPLE;
-	private int indicatorDotsColor = Color.argb(200, 219, 229, 234);
-	private boolean showIndicatorDots = true;
-	private boolean autoHideSoftInput = true;
-	private int rowNum = 3;
-	private int colNum = 7;
+	private int category = EmojiDefault.CATEGORY;
+	private int indicatorDotsColor = EmojiDefault.INDICATOR_DOTS_COLOR;
+	private boolean showIndicatorDots = EmojiDefault.SHOW_INDICATOR_DOTS;
+	private boolean autoHideSoftInput = EmojiDefault.AUTO_HIDE_SOFT_INPUT;
+	private int rowNum = EmojiDefault.ROW_NUM;
+	private int colNum = EmojiDefault.COL_NUM;
 	
 	public EmojiView(Context context) {
 		super(context);
@@ -51,12 +51,12 @@ public class EmojiView extends LinearLayout {
 		this.hide();
 		if (attrs != null) {
 			TypedArray values = this.getContext().obtainStyledAttributes(attrs, R.styleable.EmojiView);
-			this.setCategory(values.getInt(R.styleable.EmojiView_category, EmojiCategory.PEOPLE));
-			this.setIndicatorDotsColor(values.getColor(R.styleable.EmojiView_indicatorDotsColor, Color.argb(200, 219, 229, 234)));
-			this.setShowIndicatorDots(values.getBoolean(R.styleable.EmojiView_showIndicatorDots, true));;
-			this.autoHideSoftInput = values.getBoolean(R.styleable.EmojiView_autoHideSoftInput, true);
-			this.rowNum = values.getInteger(R.styleable.EmojiView_rowNum, 3);
-			this.colNum = values.getInteger(R.styleable.EmojiView_colNum, 7);
+			this.setCategory(values.getInt(R.styleable.EmojiView_category, EmojiDefault.CATEGORY));
+			this.setIndicatorDotsColor(values.getColor(R.styleable.EmojiView_indicatorDotsColor, EmojiDefault.INDICATOR_DOTS_COLOR));
+			this.setShowIndicatorDots(values.getBoolean(R.styleable.EmojiView_showIndicatorDots, EmojiDefault.SHOW_INDICATOR_DOTS));;
+			this.autoHideSoftInput = values.getBoolean(R.styleable.EmojiView_autoHideSoftInput, EmojiDefault.AUTO_HIDE_SOFT_INPUT);
+			this.rowNum = values.getInteger(R.styleable.EmojiView_rowNum, EmojiDefault.ROW_NUM);
+			this.colNum = values.getInteger(R.styleable.EmojiView_colNum, EmojiDefault.COL_NUM);
 			values.recycle();
 		}
 	}
@@ -163,6 +163,7 @@ public class EmojiView extends LinearLayout {
 		this.indicator.setLayoutParams(params);
 		this.indicator.setCurrentIndex(0);
 		this.indicator.setTotalNum(pageNum);
+		this.indicator.setDotsColor(this.indicatorDotsColor);
 		viewPager.setOnPageChangeListener(new OnPageChangeListener() {
 
 			private boolean dragged = false;
