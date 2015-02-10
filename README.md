@@ -23,6 +23,50 @@ Emoji View
 
 - Customize border color and the height of category tab.
 
+## Instruction
+
+#### Import library
+
+![Import Library](https://cloud.githubusercontent.com/assets/853842/6125301/a3b82cae-b14f-11e4-92a1-6290a1f0f3cb.png)
+
+#### Layout file
+
+```xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:emoji="http://schemas.android.com/apk/res/zhaohg.emojiviewdemo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="fill">
+
+    <zhaohg.emojiview.EmojiEditText
+        android:id="@+id/emojiEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" >
+        <requestFocus />
+    </zhaohg.emojiview.EmojiEditText>
+    
+    <zhaohg.emojiview.EmojiViewEx
+        android:id="@+id/emojiView"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:background="#EEEEEE"
+        emoji:indicatorDotsColor="#222222"
+        emoji:categoryHeight="40dp"/>
+
+</LinearLayout>
+```
+
+#### Set EditText
+
+```java
+EditText editText = (EditText) this.findViewById(R.id.emojiEditText);
+EmojiView emojiView = (EmojiViewEx) this.findViewById(R.id.emojiView);
+emojiView.setEditText(editText);
+```
+
 ## Acknowledgement
 
 * http://apps.timwhitlock.info/emoji/tables/unicode
