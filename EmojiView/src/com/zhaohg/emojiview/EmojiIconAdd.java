@@ -20,7 +20,7 @@ public class EmojiIconAdd extends EmojiIcon {
 		if ((code | 0xffffffff00000000L) == 0) {
 			this.setEmojiText(convertCodeToString((int)code));
 		} else {
-			int high = (int)((code & 0xffffffff00000000L) >> 32);
+			int high = (int)(code >> 32);
 			int low = (int)(code & 0x00000000ffffffffL);
 			this.setEmojiText(convertCodeToString(high) + convertCodeToString(low));
 		}

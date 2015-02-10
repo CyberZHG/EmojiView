@@ -2,7 +2,6 @@ package com.zhaohg.emojiview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -17,7 +16,6 @@ public class EmojiViewEx extends LinearLayout {
 	private boolean isHidden = true;
 	private boolean initialized = false;
 	
-	private AttributeSet attrs;
 	private EditText edit;
 	private EmojiView[] emojiViews;
 	private float currentCategory = EmojiCategory.PEOPLE;
@@ -28,33 +26,27 @@ public class EmojiViewEx extends LinearLayout {
 	private int rowNum = EmojiDefault.ROW_NUM;
 	private int colNum = EmojiDefault.COL_NUM;
 	
-	private int categoryHeight = 30;
+	private int borderColor = EmojiDefault.BORDER_COLOR;
+	private int categoryHeight = EmojiDefault.CATEGORY_HEIGHT;
 	
-	public EmojiViewEx(Context context) {
-		super(context);
-		this.initView(null);
-	}
+	private View[] borders;
 	
 	public EmojiViewEx(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.initView(attrs);
 	}
 
-	public EmojiViewEx(Context context, AttributeSet attrs, int defStyleAttr) {
-		super(context, attrs, defStyleAttr);
-		this.initView(attrs);
-	}
-	
 	public void initView(AttributeSet attrs) {
-		this.attrs = attrs;
 		this.hide();
 		if (attrs != null) {
 			TypedArray values = this.getContext().obtainStyledAttributes(attrs, R.styleable.EmojiView);
-			this.setIndicatorDotsColor(values.getColor(R.styleable.EmojiView_indicatorDotsColor, EmojiDefault.INDICATOR_DOTS_COLOR));
-			this.setShowIndicatorDots(values.getBoolean(R.styleable.EmojiView_showIndicatorDots, EmojiDefault.SHOW_INDICATOR_DOTS));;
+			this.indicatorDotsColor = values.getColor(R.styleable.EmojiView_indicatorDotsColor, EmojiDefault.INDICATOR_DOTS_COLOR);
+			this.showIndicatorDots = values.getBoolean(R.styleable.EmojiView_showIndicatorDots, EmojiDefault.SHOW_INDICATOR_DOTS);
 			this.autoHideSoftInput = values.getBoolean(R.styleable.EmojiView_autoHideSoftInput, EmojiDefault.AUTO_HIDE_SOFT_INPUT);
 			this.rowNum = values.getInteger(R.styleable.EmojiView_rowNum, EmojiDefault.ROW_NUM);
 			this.colNum = values.getInteger(R.styleable.EmojiView_colNum, EmojiDefault.COL_NUM);
+			this.borderColor = values.getColor(R.styleable.EmojiView_borderColor, EmojiDefault.BORDER_COLOR);
+			this.categoryHeight = (int) values.getDimension(R.styleable.EmojiView_categoryHeight, EmojiDefault.CATEGORY_HEIGHT);
 			values.recycle();
 		}
 	}
@@ -64,11 +56,6 @@ public class EmojiViewEx extends LinearLayout {
 		this.setOrientation(VERTICAL);
 		this.setFocusable(false);
 		this.setWeightSum(1);
-		if (attrs != null) {
-			TypedArray values = this.getContext().obtainStyledAttributes(attrs, R.styleable.EmojiView);
-			this.categoryHeight = (int) values.getDimension(R.styleable.EmojiView_categoryHeight, 50);
-			values.recycle();
-		}
 		
 		this.emojiViews = new EmojiView[5];
 		for (int i = 0; i < 5; ++i) {
@@ -84,42 +71,56 @@ public class EmojiViewEx extends LinearLayout {
 			this.addView(this.emojiViews[i]);
 		}
 		
+		this.borders = new View[5];
+		View horizontal = new View(this.getContext());
+		horizontal.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, 1, 0));
+		horizontal.setBackgroundColor(this.borderColor);
+		this.addView(horizontal);
+		this.borders[0] = horizontal;
+		
 		LinearLayout categoryLayout = new LinearLayout(this.getContext());
-		categoryLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, this.categoryHeight));
+		categoryLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, this.categoryHeight, 0));
 		categoryLayout.setGravity(Gravity.FILL);
 		categoryLayout.setOrientation(HORIZONTAL);
 		categoryLayout.setWeightSum(5);
 		int[] drawableId = new int[] {
-				R.drawable.category_people,
-				R.drawable.category_places,
-				R.drawable.category_nature,
-				R.drawable.category_objects,
-				R.drawable.category_symbols
+				R.drawable.category_people_dark,
+				R.drawable.category_places_dark,
+				R.drawable.category_nature_dark,
+				R.drawable.category_objects_dark,
+				R.drawable.category_symbols_dark
 		};
 		for (int i = 0; i < drawableId.length; ++i) {
+			if (i > 0) {
+				View vertical = new View(this.getContext());
+				vertical.setLayoutParams(new LayoutParams(1, LayoutParams.MATCH_PARENT, 0));
+				vertical.setBackgroundColor(this.borderColor);
+				categoryLayout.addView(vertical);
+				this.borders[i] = vertical;
+			}
 			ImageView imageView = new ImageView(this.getContext());
 			imageView.setScaleType(ScaleType.FIT_CENTER);
 			imageView.setLayoutParams(new LayoutParams(0, LayoutParams.MATCH_PARENT, 1));
 			imageView.setImageDrawable(this.getResources().getDrawable(drawableId[i]));
-			imageView.setPadding(5, 5, 5, 5);
+			imageView.setPadding(0, 0, 0, 15);
 			imageView.setId(drawableId[i]);
 			imageView.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					switch (v.getId()) {
-					case R.drawable.category_people:
+					case R.drawable.category_people_dark:
 						setCurrentCategory(EmojiCategory.PEOPLE);
 						break;
-					case R.drawable.category_places:
+					case R.drawable.category_places_dark:
 						setCurrentCategory(EmojiCategory.PLACES);
 						break;
-					case R.drawable.category_nature:
+					case R.drawable.category_nature_dark:
 						setCurrentCategory(EmojiCategory.NATURE);
 						break;
-					case R.drawable.category_objects:
+					case R.drawable.category_objects_dark:
 						setCurrentCategory(EmojiCategory.OBJECTS);
 						break;
-					case R.drawable.category_symbols:
+					case R.drawable.category_symbols_dark:
 						setCurrentCategory(EmojiCategory.SYMBOLS);
 						break;
 					}
@@ -160,6 +161,15 @@ public class EmojiViewEx extends LinearLayout {
 			this.show();
 		} else {
 			this.hide();
+		}
+	}
+	
+	public void setBorderColor(int color) {
+		this.borderColor = color;
+		if (this.borders != null) {
+			for (View border : this.borders) {
+				border.setBackgroundColor(color);
+			}
 		}
 	}
 	

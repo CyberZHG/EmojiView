@@ -41,9 +41,8 @@
         android:id="@+id/emojiView"
         android:layout_width="match_parent"
         android:layout_height="190dp"
-        emoji:showIndicatorDots="true"
-        emoji:autoHideSoftInput="true"
-        emoji:rowNum="4"
-        emoji:colNum="8"/>
+        android:background="#EEEEEE"
+        emoji:indicatorDotsColor="#222222"
+        emoji:categoryHeight="40dp"/>
 
 </LinearLayout>

@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
@@ -48,12 +47,13 @@ public class EmojiView extends LinearLayout {
 		this.setGravity(Gravity.FILL);
 		this.setOrientation(VERTICAL);
 		this.setFocusable(false);
+		this.setPadding(20, 20, 20, 20);
 		this.hide();
 		if (attrs != null) {
 			TypedArray values = this.getContext().obtainStyledAttributes(attrs, R.styleable.EmojiView);
-			this.setCategory(values.getInt(R.styleable.EmojiView_category, EmojiDefault.CATEGORY));
-			this.setIndicatorDotsColor(values.getColor(R.styleable.EmojiView_indicatorDotsColor, EmojiDefault.INDICATOR_DOTS_COLOR));
-			this.setShowIndicatorDots(values.getBoolean(R.styleable.EmojiView_showIndicatorDots, EmojiDefault.SHOW_INDICATOR_DOTS));;
+			this.category = values.getInt(R.styleable.EmojiView_category, EmojiDefault.CATEGORY);
+			this.indicatorDotsColor = values.getColor(R.styleable.EmojiView_indicatorDotsColor, EmojiDefault.INDICATOR_DOTS_COLOR);
+			this.showIndicatorDots = values.getBoolean(R.styleable.EmojiView_showIndicatorDots, EmojiDefault.SHOW_INDICATOR_DOTS);
 			this.autoHideSoftInput = values.getBoolean(R.styleable.EmojiView_autoHideSoftInput, EmojiDefault.AUTO_HIDE_SOFT_INPUT);
 			this.rowNum = values.getInteger(R.styleable.EmojiView_rowNum, EmojiDefault.ROW_NUM);
 			this.colNum = values.getInteger(R.styleable.EmojiView_colNum, EmojiDefault.COL_NUM);

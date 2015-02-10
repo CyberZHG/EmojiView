@@ -15,19 +15,21 @@ public class EmojiSetup {
 		for (EmojiSpan span : spans) {
 			text.removeSpan(span);
 		}
-		for (int i = start; i < start + length; ++i) {
+		for (int i = start, size; i < start + length; i += size) {
 			int drawableId = -1;
-			int size = 1;
 			long firstUnicode = Character.codePointAt(text, i);
-			if (EmojiCodeMap.exists(firstUnicode)) {
-				drawableId = EmojiCodeMap.getDrawableID(firstUnicode);
-			} else if (i < start + length - 1) {
-				long secondUnicode = Character.codePointAt(text, i + 1);
+			size = Character.charCount((int)firstUnicode);
+			if (firstUnicode != 0 && i + size < start + length) {
+				long secondUnicode = Character.codePointAt(text, i + size);
 				long code = ((firstUnicode) << 32) | secondUnicode;
 				if (EmojiCodeMap.exists(code)) {
 					drawableId = EmojiCodeMap.getDrawableID(code);
-					++i;
-					size = 2;
+					size += Character.charCount((int)secondUnicode);
+				}
+			}
+			if (drawableId == -1) {
+				if (EmojiCodeMap.exists(firstUnicode)) {
+					drawableId = EmojiCodeMap.getDrawableID(firstUnicode);
 				}
 			}
 			if (drawableId != -1) {

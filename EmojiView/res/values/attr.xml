@@ -18,6 +18,7 @@
         <attr name="colNum" format="integer"/>
         
         <!-- Attributes for EmojiViewEx -->
+        <attr name="borderColor" format="color"/>
         <attr name="categoryHeight" format="dimension"/>
         
     </declare-styleable>

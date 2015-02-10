@@ -11,5 +11,6 @@ public class EmojiDefault {
 	public static int ROW_NUM = 3;
 	public static int COL_NUM = 7;
 	
-	public static int CATEGORY_HEIGHT = 50;
+	public static int BORDER_COLOR = Color.argb(0, 255, 255, 255);
+	public static int CATEGORY_HEIGHT = 100;
 }

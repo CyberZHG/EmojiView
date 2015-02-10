@@ -16,6 +16,12 @@ Emoji View
 - The number of rows and columns could be customized.
 - Navigator dots on the bottom.
 
+#### EmojiViewEx
+
+![EmojiViewEx](https://cloud.githubusercontent.com/assets/853842/6123783/a623e4f0-b141-11e4-8d03-c7b74b3a18c9.png)
+
+- Customize border color and the height of category tab.
+
 ## Acknowledgement
 
 * http://apps.timwhitlock.info/emoji/tables/unicode
