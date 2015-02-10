@@ -57,7 +57,7 @@ public class EmojiPage extends LinearLayout {
 					this.icons[i][j] = (EmojiIcon) icon;
 				} else {
 					int index = i * colNum + j;
-					if (index < codeList.length) {
+					if (start + index < codeList.length) {
 						long code = codeList[start + index];
 						int id = EmojiCodeMap.getDrawableID(code);
 						icon = newIcon(emojiView, code, id);
@@ -108,17 +108,12 @@ public class EmojiPage extends LinearLayout {
 				}
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN:
-					self.getEmojiView().setActiveIcon(activeIcon);
 					return true;
 				case MotionEvent.ACTION_UP:
 					if (activeIcon != null) {
 						activeIcon.onActionUp();
 					}
-					self.getEmojiView().setActiveIcon(null);
 					return true;
-				case MotionEvent.ACTION_CANCEL:
-					self.getEmojiView().setActiveIcon(null);
-					return false;
 				}
 				return false;
 			}

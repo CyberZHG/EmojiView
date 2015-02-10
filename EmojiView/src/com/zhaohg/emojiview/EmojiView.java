@@ -22,6 +22,7 @@ public class EmojiView extends LinearLayout {
 	private boolean initialized = false;
 	private boolean isHidden;
 	
+	private int category = EmojiCategory.PEOPLE;
 	private int indicatorDotsColor = Color.argb(200, 219, 229, 234);
 	private boolean showIndicatorDots = true;
 	private boolean autoHideSoftInput = true;
@@ -50,12 +51,22 @@ public class EmojiView extends LinearLayout {
 		this.hide();
 		if (attrs != null) {
 			TypedArray values = this.getContext().obtainStyledAttributes(attrs, R.styleable.EmojiView);
+			this.setCategory(values.getInt(R.styleable.EmojiView_category, EmojiCategory.PEOPLE));
 			this.setIndicatorDotsColor(values.getColor(R.styleable.EmojiView_indicatorDotsColor, Color.argb(200, 219, 229, 234)));
 			this.setShowIndicatorDots(values.getBoolean(R.styleable.EmojiView_showIndicatorDots, true));;
 			this.autoHideSoftInput = values.getBoolean(R.styleable.EmojiView_autoHideSoftInput, true);
 			this.rowNum = values.getInteger(R.styleable.EmojiView_rowNum, 3);
 			this.colNum = values.getInteger(R.styleable.EmojiView_colNum, 7);
 			values.recycle();
+		}
+	}
+	
+	public void setCategory(int cat) {
+		this.category = cat;
+		if (this.isHidden) {
+			this.initialized = false;
+		} else {
+			this.initPages();
 		}
 	}
 	
@@ -120,7 +131,7 @@ public class EmojiView extends LinearLayout {
 	private void initPages() {
 		// Initialize sub pages.
 		final List<View> views = new ArrayList<View>();
-    	long[] codeList = EmojiCodeMap.getCodeList(EmojiCodeMap.ALL);
+    	long[] codeList = EmojiCodeMap.getCodeList(this.category);
 		int itemPerPage = rowNum * colNum - 1;
 		int pageNum = (codeList.length + itemPerPage - 1) / itemPerPage;
 		for (int i = 0; i < pageNum; ++i) {
@@ -165,11 +176,13 @@ public class EmojiView extends LinearLayout {
 				case ViewPager.SCROLL_STATE_SETTLING:
 					break;
 				case ViewPager.SCROLL_STATE_IDLE:
-					int index = viewPager.getCurrentItem();
-					if (index < views.size() - 1) {
-						((EmojiPage)views.get(index + 1)).initIcons();
+					if (this.dragged) {
+						int index = viewPager.getCurrentItem();
+						if (index < views.size() - 1) {
+							((EmojiPage)views.get(index + 1)).initIcons();
+						}
+						this.dragged = false;
 					}
-					this.dragged = false;
 					break;
 				}
 			}
@@ -216,9 +229,5 @@ public class EmojiView extends LinearLayout {
 		} else {
 			hide();
 		}
-	}
-	
-	public void setActiveIcon(EmojiIcon icon) {
-		// TODO
 	}
 }

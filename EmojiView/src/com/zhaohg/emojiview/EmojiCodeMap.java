@@ -4,12 +4,6 @@ import android.support.v4.util.LongSparseArray;
 
 public class EmojiCodeMap {
 
-	public static final int ALL = 0;
-	public static final int PEOPLE = 1;
-	public static final int PLACES = 2;
-	public static final int NATURE = 3;
-	public static final int OBJECTS = 4;
-	public static final int SYMBOLS = 5;
 
 	private static LongSparseArray<Integer> all = new LongSparseArray<Integer>();
 	
@@ -30,17 +24,17 @@ public class EmojiCodeMap {
 	
 	public static long[] getCodeList(int type) {
 		switch (type) {
-		case ALL:
+		case EmojiCategory.ALL:
 			return allList;
-		case PEOPLE:
+		case EmojiCategory.PEOPLE:
 			return peopleList;
-		case NATURE:
+		case EmojiCategory.NATURE:
 			return natureList;
-		case OBJECTS:
+		case EmojiCategory.OBJECTS:
 			return objectsList;
-		case PLACES:
+		case EmojiCategory.PLACES:
 			return placesList;
-		case SYMBOLS:
+		case EmojiCategory.SYMBOLS:
 			return symbolsList;
 		}
 		return new long[0];

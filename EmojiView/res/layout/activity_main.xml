@@ -37,7 +37,7 @@
 	    
     </LinearLayout>
     
-    <com.zhaohg.emojiview.EmojiView
+    <com.zhaohg.emojiview.EmojiViewEx
         android:id="@+id/emojiView"
         android:layout_width="match_parent"
         android:layout_height="190dp"

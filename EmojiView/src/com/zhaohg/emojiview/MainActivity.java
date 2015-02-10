@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	
-	private EmojiView emojiView;
+	private EmojiViewEx emojiView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +18,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		final EditText editText = (EditText) this.findViewById(R.id.emojiEditText);
-		this.emojiView = (EmojiView) this.findViewById(R.id.emojiView);
+		this.emojiView = (EmojiViewEx) this.findViewById(R.id.emojiView);
 		this.emojiView.setEditText(editText);
 		
 		final TextView textView = (TextView) this.findViewById(R.id.emojiTextView);
