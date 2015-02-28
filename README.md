@@ -67,7 +67,7 @@ EmojiView emojiView = (EmojiViewEx) this.findViewById(R.id.emojiView);
 emojiView.setEditText(editText);
 ```
 
-## Acknowledgement
+## Acknowledgements
 
 * http://apps.timwhitlock.info/emoji/tables/unicode
 * http://www.iemoji.com/

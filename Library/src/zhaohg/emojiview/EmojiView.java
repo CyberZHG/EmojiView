@@ -166,22 +166,29 @@ public class EmojiView extends LinearLayout {
 		this.indicator.setDotsColor(this.indicatorDotsColor);
 		viewPager.setOnPageChangeListener(new OnPageChangeListener() {
 
+			private int pageIndex = -1;
 			private boolean dragged = false;
+			
+			public void loadNextPage() {
+				if (0 < this.pageIndex && this.pageIndex < views.size() - 1) {
+					((EmojiPage)views.get(this.pageIndex + 1)).initIcons();
+				}
+			}
 			
 			@Override
 			public void onPageScrollStateChanged(int state) {
 				switch (state) {
 				case ViewPager.SCROLL_STATE_DRAGGING:
+					if (this.dragged) {
+						this.loadNextPage();
+					}
 					this.dragged = true;
 					break;
 				case ViewPager.SCROLL_STATE_SETTLING:
 					break;
 				case ViewPager.SCROLL_STATE_IDLE:
 					if (this.dragged) {
-						int index = viewPager.getCurrentItem();
-						if (index < views.size() - 1) {
-							((EmojiPage)views.get(index + 1)).initIcons();
-						}
+						this.loadNextPage();
 						this.dragged = false;
 					}
 					break;
@@ -195,6 +202,7 @@ public class EmojiView extends LinearLayout {
 			public void onPageSelected(int index) {
 				indicator.setCurrentIndex(index);
 				indicator.invalidate();
+				this.pageIndex = index;
 			}
 		});
 		this.indicator.setDotsColor(this.indicatorDotsColor);
