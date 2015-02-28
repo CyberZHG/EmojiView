@@ -8,6 +8,7 @@ Emoji View
 * __EmojiViewEx__: used for selecting and entering emoji characters in _all_ category.
 * __EmojiEditView__ & __EmojiTextView__: used for editing and showing texts with emoji respectively.
 * Emoji characters are encoded in corresponding Unicode.
+* A lighter library contains only people category.
 
 #### EmojiView
 
