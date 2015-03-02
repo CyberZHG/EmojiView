@@ -11,10 +11,6 @@ public class EmojiSetup {
 	
 	public static void setupEmoji(Context context, Spannable text, int textSize,
 			int start, int length) {
-		EmojiSpan[] spans = text.getSpans(start, start + length, EmojiSpan.class);
-		for (EmojiSpan span : spans) {
-			text.removeSpan(span);
-		}
 		for (int i = start, size; i < start + length; i += size) {
 			int drawableId = -1;
 			long firstUnicode = Character.codePointAt(text, i);

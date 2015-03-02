@@ -17,7 +17,7 @@ public class EmojiIconAdd extends EmojiIcon {
 	}
 	
 	public void setEmojiCode(long code) {
-		if ((code | 0xffffffff00000000L) == 0) {
+		if ((code >> 32) == 0) {
 			this.setEmojiText(convertCodeToString((int)code));
 		} else {
 			int high = (int)(code >> 32);
