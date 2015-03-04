@@ -223,7 +223,7 @@ public class EmojiView extends LinearLayout {
 		}
 		if (this.autoHideSoftInput) {
 			InputMethodManager imm = (InputMethodManager) this.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-			imm.hideSoftInputFromWindow(this.getWindowToken(), 0);
+			imm.hideSoftInputFromWindow(this.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 		}
 	}
 	

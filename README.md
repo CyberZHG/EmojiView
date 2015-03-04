@@ -4,21 +4,22 @@ Emoji View
 ## Features
 
 * There are 845 emoji characters.
-* __EmojiView__: used for selecting and entering emoji characters in _one_ category.
+* __EmojiView__: used for selecting and entering emoji characters in specified _one_ category.
 * __EmojiViewEx__: used for selecting and entering emoji characters in _all_ category.
 * __EmojiEditView__ & __EmojiTextView__: used for editing and showing texts with emoji respectively.
+  (Native EditView and TextView could also be used for showing emoji characters.)
 * Emoji characters are encoded in corresponding Unicode.
 * A lighter library contains only people category.
 
-#### EmojiView
+### EmojiView
 
 ![EmojiView](https://cloud.githubusercontent.com/assets/853842/6096482/a274338e-afcd-11e4-9e27-73ea324166d9.png)
 
 - The process of resources loading is lazy.
 - The number of rows and columns could be customized.
-- Navigator dots on the bottom.
+- Navigator dots on the bottom and the color could be customized.
 
-#### EmojiViewEx
+### EmojiViewEx
 
 ![EmojiViewEx](https://cloud.githubusercontent.com/assets/853842/6123783/a623e4f0-b141-11e4-8d03-c7b74b3a18c9.png)
 
@@ -26,11 +27,11 @@ Emoji View
 
 ## Instruction
 
-#### Import library
+### Import library
 
 ![Import Library](https://cloud.githubusercontent.com/assets/853842/6125301/a3b82cae-b14f-11e4-92a1-6290a1f0f3cb.png)
 
-#### Layout file
+### Layout file
 
 ```xml
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -60,12 +61,38 @@ Emoji View
 </LinearLayout>
 ```
 
-#### Set EditText
+### Set EditText
 
 ```java
 EditText editText = (EditText) this.findViewById(R.id.emojiEditText);
 EmojiView emojiView = (EmojiViewEx) this.findViewById(R.id.emojiView);
 emojiView.setEditText(editText);
+```
+
+### Use Native EditText and TextView
+
+For EditText overload the `onTextChanged` method:
+
+```java
+@Override
+protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
+    this.setupEmoji(start, lengthAfter);
+}
+
+private void setupEmoji(int start, int length) {
+	EmojiSetup.setupEmoji(this.getContext(), this.getText(), (int)this.getTextSize(), start, length);
+}
+```
+
+For TextView overload the `setText` method:
+
+```java
+@Override
+public void setText(CharSequence text, BufferType type) {
+    SpannableStringBuilder builder = new SpannableStringBuilder(text);
+    EmojiSetup.setupEmoji(this.getContext(), builder, (int) this.getTextSize());
+	super.setText(builder, type);
+}
 ```
 
 ## Acknowledgements
