@@ -27,16 +27,39 @@ Emoji View
 
 ## Instruction
 
-### Import library
+### Import library in Eclipse
+
+Eclipse is supported before release 1.3.
 
 ![Import Library](https://cloud.githubusercontent.com/assets/853842/6125301/a3b82cae-b14f-11e4-92a1-6290a1f0f3cb.png)
+
+### Import libray using Gradle
+
+#### ~~From jCenter (Not Ready)~~
+
+```gradle
+dependencies {
+    compile 'com.zhaohg.emojiview:library:1.0.0'
+}
+```
+
+#### Local build
+
+```gradle
+dependencies {
+    compile project(':zhaohg')
+}
+```
 
 ### Layout file
 
 ```xml
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    <!-- Use the following line for Eclipse -->
     xmlns:emoji="http://schemas.android.com/apk/res/zhaohg.emojiviewdemo"
+    <!-- Use the following line for Gradle -->
+    xmlns:emoji="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"

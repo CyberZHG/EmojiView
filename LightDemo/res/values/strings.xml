@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <string name="app_name">EmojiViewDemo</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="emoji_button_text">Emoji</string>
-    <string name="emoji_edit_hint">Try emoji here.</string>
-
-</resources>
