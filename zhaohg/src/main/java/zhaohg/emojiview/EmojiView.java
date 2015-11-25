@@ -15,29 +15,29 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 public class EmojiView extends LinearLayout {
-	
+
 	private EditText edit;
 	private EmojiIndicator indicator;
 	private boolean initialized = false;
 	private boolean isHidden;
-	
+
 	private int category = EmojiDefault.CATEGORY;
 	private int indicatorDotsColor = EmojiDefault.INDICATOR_DOTS_COLOR;
 	private boolean showIndicatorDots = EmojiDefault.SHOW_INDICATOR_DOTS;
 	private boolean autoHideSoftInput = EmojiDefault.AUTO_HIDE_SOFT_INPUT;
 	private int rowNum = EmojiDefault.ROW_NUM;
 	private int colNum = EmojiDefault.COL_NUM;
-	
+
 	public EmojiView(Context context) {
 		super(context);
 		this.initView(null);
 	}
-	
+
 	public EmojiView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.initView(attrs);
 	}
-	
+
 	public EmojiView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		this.initView(attrs);
@@ -60,7 +60,7 @@ public class EmojiView extends LinearLayout {
 			values.recycle();
 		}
 	}
-	
+
 	public void setCategory(int cat) {
 		this.category = cat;
 		if (this.isHidden) {
@@ -69,18 +69,18 @@ public class EmojiView extends LinearLayout {
 			this.initPages();
 		}
 	}
-	
+
 	public void setAutoHideSoftInput(boolean value) {
 		this.autoHideSoftInput = value;
 	}
-	
+
 	public void setIndicatorDotsColor(int color) {
 		this.indicatorDotsColor = color;
 		if (this.indicator != null) {
 			this.indicator.setDotsColor(color);
 		}
 	}
-	
+
 	public void setShowIndicatorDots(boolean value) {
 		this.showIndicatorDots = value;
 		if (this.indicator != null) {
@@ -91,15 +91,15 @@ public class EmojiView extends LinearLayout {
 			}
 		}
 	}
-	
+
 	public void setRowNum(int rowNum) {
 		this.setIconNum(rowNum, this.colNum);
 	}
-	
+
 	public void setColNum(int colNum) {
 		this.setIconNum(this.rowNum, colNum);
 	}
-	
+
 	public void setIconNum(int rowNum, int colNum) {
 		if (this.rowNum != rowNum || this.colNum != colNum) {
 			this.rowNum = rowNum;
@@ -111,26 +111,26 @@ public class EmojiView extends LinearLayout {
 			}
 		}
 	}
-	
+
 	public int getRowNum() {
 		return this.rowNum;
 	}
-	
+
 	public int getColNum() {
 		return this.colNum;
 	}
-	
+
 	public void setEditText(EditText edit) {
 		this.edit = edit;
 	}
-	
+
 	public EditText getEditText() {
 		return this.edit;
 	}
-	
+
 	private void initPages() {
 		// Initialize sub pages.
-		final List<View> views = new ArrayList<View>();
+		final List<View> views = new ArrayList<>();
     	long[] codeList = EmojiCodeMap.getCodeList(this.category);
 		int itemPerPage = rowNum * colNum - 1;
 		int pageNum = (codeList.length + itemPerPage - 1) / itemPerPage;
@@ -153,7 +153,7 @@ public class EmojiView extends LinearLayout {
 		// Initialize view pager.
 		final ViewPager viewPager = new ViewPager(this.getContext());
 		viewPager.setAdapter(new EmojiPagerAdapter(views));
-		LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 
+		LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.MATCH_PARENT, 5);
 		viewPager.setLayoutParams(params);
 		this.addView(viewPager);
@@ -168,13 +168,13 @@ public class EmojiView extends LinearLayout {
 
 			private int pageIndex = -1;
 			private boolean dragged = false;
-			
+
 			public void loadNextPage() {
 				if (0 < this.pageIndex && this.pageIndex < views.size() - 1) {
 					((EmojiPage)views.get(this.pageIndex + 1)).initIcons();
 				}
 			}
-			
+
 			@Override
 			public void onPageScrollStateChanged(int state) {
 				switch (state) {
@@ -208,7 +208,7 @@ public class EmojiView extends LinearLayout {
 		this.indicator.setDotsColor(this.indicatorDotsColor);
 		this.addView(this.indicator);
 	}
-	
+
 	public void show() {
 		if (!this.initialized) {
 			this.initialized = true;
@@ -226,12 +226,12 @@ public class EmojiView extends LinearLayout {
 			imm.hideSoftInputFromWindow(this.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 		}
 	}
-	
+
 	public void hide() {
 		this.isHidden = true;
 		this.setVisibility(GONE);
 	}
-	
+
 	public void toggle() {
 		if (this.isHidden) {
 			show();

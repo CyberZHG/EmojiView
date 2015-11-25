@@ -6,11 +6,11 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 public class EmojiTextView extends TextView {
-	
+
 	public EmojiTextView(Context context) {
 		super(context);
 	}
-	
+
 	public EmojiTextView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
@@ -25,4 +25,5 @@ public class EmojiTextView extends TextView {
         EmojiSetup.setupEmoji(this.getContext(), builder, (int) this.getTextSize());
 		super.setText(builder, type);
 	}
+
 }

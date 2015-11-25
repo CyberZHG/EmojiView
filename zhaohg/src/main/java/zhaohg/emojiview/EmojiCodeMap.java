@@ -1054,4 +1054,5 @@ public class EmojiCodeMap {
 				allList[index] = symbolsList[i];
 			}
 	}
+
 }

@@ -5,17 +5,17 @@ import android.text.Editable;
 import android.widget.EditText;
 
 public class EmojiIconAdd extends EmojiIcon {
-	
-	private String emojiText = ""; 
-	
+
+	private String emojiText = "";
+
 	public EmojiIconAdd(Context context, EmojiView emojiView) {
 		super(context, emojiView);
 	}
-	
+
 	private String convertCodeToString(int code) {
 		return new String(Character.toChars(code));
 	}
-	
+
 	public void setEmojiCode(long code) {
 		if ((code >> 32) == 0) {
 			this.setEmojiText(convertCodeToString((int)code));
@@ -25,11 +25,11 @@ public class EmojiIconAdd extends EmojiIcon {
 			this.setEmojiText(convertCodeToString(high) + convertCodeToString(low));
 		}
 	}
-	
+
 	public void setEmojiText(String text) {
 		this.emojiText = text;
 	}
-	
+
 	@Override
 	public void onActionUp() {
 		EditText edit = this.emojiView.getEditText();
@@ -41,4 +41,5 @@ public class EmojiIconAdd extends EmojiIcon {
 			}
 		}
 	}
+
 }

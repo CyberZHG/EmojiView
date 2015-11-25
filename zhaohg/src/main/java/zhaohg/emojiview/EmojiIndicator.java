@@ -9,24 +9,24 @@ import android.view.View;
 public class EmojiIndicator extends View {
 
 	private Paint paint = new Paint();
-	
+
 	private int currentIndex = 0;
 	private int totalNum = 0;
-	
+
 	public EmojiIndicator(Context context) {
 		super(context);
 		paint.setAntiAlias(true);
 		paint.setARGB(200, 219, 229, 234);
 	}
-	
+
 	public void setDotsColor(int color) {
 		paint.setColor(color);
 	}
-	
+
 	public void setCurrentIndex(int index) {
 		this.currentIndex = index;
 	}
-	
+
 	public void setTotalNum(int num) {
 		this.totalNum = num;
 	}
@@ -52,4 +52,5 @@ public class EmojiIndicator extends View {
 			}
 		}
 	}
+
 }

@@ -5,12 +5,12 @@ import android.view.KeyEvent;
 import android.widget.EditText;
 
 public class EmojiIconDelete extends EmojiIcon {
-	
+
 	public EmojiIconDelete(Context context, EmojiView emojiView) {
 		super(context, emojiView);
 		this.setImageDrawable(this.getResources().getDrawable(R.drawable.emoji_delete));
 	}
-	
+
 	@Override
 	public void onActionUp() {
 		EditText edit = this.emojiView.getEditText();
@@ -18,4 +18,5 @@ public class EmojiIconDelete extends EmojiIcon {
 			edit.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
 		}
 	}
+
 }

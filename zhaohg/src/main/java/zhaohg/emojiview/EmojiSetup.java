@@ -4,11 +4,11 @@ import android.content.Context;
 import android.text.Spannable;
 
 public class EmojiSetup {
-	
+
 	public static void setupEmoji(Context context, Spannable text, int textSize) {
 		setupEmoji(context, text, textSize, 0, text.length());
 	}
-	
+
 	public static void setupEmoji(Context context, Spannable text, int textSize,
 			int start, int length) {
 		for (int i = start, size; i < start + length; i += size) {
@@ -34,4 +34,5 @@ public class EmojiSetup {
 			}
 		}
 	}
+
 }

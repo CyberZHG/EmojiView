@@ -10,18 +10,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-	
+
 	private EmojiViewEx emojiView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		final EditText editText = (EditText) this.findViewById(R.id.emojiEditText);
 		this.emojiView = (EmojiViewEx) this.findViewById(R.id.emojiView);
 		this.emojiView.setEditText(editText);
-		
+
 		final TextView textView = (TextView) this.findViewById(R.id.emojiTextView);
 		editText.addTextChangedListener(new TextWatcher() {
 
@@ -37,11 +37,12 @@ public class MainActivity extends Activity {
 			public void afterTextChanged(Editable s) {
 				textView.setText(editText.getText().toString());
 			}
-			
+
 		});
 	}
-	
+
 	public void toggleEmojiView(View view) {
 		this.emojiView.toggle();
 	}
+	
 }

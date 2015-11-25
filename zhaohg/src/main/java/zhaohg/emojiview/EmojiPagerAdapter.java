@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class EmojiPagerAdapter extends PagerAdapter {
-	
+
 	private List<View> views;
 
 	public EmojiPagerAdapter(List<View> views) {
 		this.views = views;
 	}
-	
+
 	@Override
 	public int getCount() {
 		return this.views.size();
@@ -35,4 +35,5 @@ public class EmojiPagerAdapter extends PagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView(this.views.get(position));
     }
+
 }

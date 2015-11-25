@@ -12,25 +12,25 @@ import android.widget.LinearLayout;
 import android.widget.ImageView.ScaleType;
 
 public class EmojiViewEx extends LinearLayout {
-	
+
 	private boolean isHidden = true;
 	private boolean initialized = false;
-	
+
 	private EditText edit;
 	private EmojiView[] emojiViews;
 	private float currentCategory = EmojiCategory.PEOPLE;
-	
+
 	private int indicatorDotsColor = EmojiDefault.INDICATOR_DOTS_COLOR;
 	private boolean showIndicatorDots = EmojiDefault.SHOW_INDICATOR_DOTS;
 	private boolean autoHideSoftInput = EmojiDefault.AUTO_HIDE_SOFT_INPUT;
 	private int rowNum = EmojiDefault.ROW_NUM;
 	private int colNum = EmojiDefault.COL_NUM;
-	
+
 	private int borderColor = EmojiDefault.BORDER_COLOR;
 	private int categoryHeight = EmojiDefault.CATEGORY_HEIGHT;
-	
+
 	private View[] borders;
-	
+
 	public EmojiViewEx(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.initView(attrs);
@@ -50,13 +50,13 @@ public class EmojiViewEx extends LinearLayout {
 			values.recycle();
 		}
 	}
-	
+
 	public void initPages() {
 		this.setGravity(Gravity.FILL);
 		this.setOrientation(VERTICAL);
 		this.setFocusable(false);
 		this.setWeightSum(1);
-		
+
 		this.emojiViews = new EmojiView[5];
 		for (int i = 0; i < 5; ++i) {
 			this.emojiViews[i] = new EmojiView(this.getContext());
@@ -70,14 +70,14 @@ public class EmojiViewEx extends LinearLayout {
 			this.emojiViews[i].setIconNum(this.rowNum, this.colNum);
 			this.addView(this.emojiViews[i]);
 		}
-		
+
 		this.borders = new View[5];
 		View horizontal = new View(this.getContext());
 		horizontal.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, 1, 0));
 		horizontal.setBackgroundColor(this.borderColor);
 		this.addView(horizontal);
 		this.borders[0] = horizontal;
-		
+
 		LinearLayout categoryLayout = new LinearLayout(this.getContext());
 		categoryLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, this.categoryHeight, 0));
 		categoryLayout.setGravity(Gravity.FILL);
@@ -145,12 +145,12 @@ public class EmojiViewEx extends LinearLayout {
 		this.isHidden = false;
 		this.setVisibility(VISIBLE);
 	}
-	
+
 	public void hide() {
 		this.isHidden = true;
 		this.setVisibility(GONE);
 	}
-	
+
 	public void toggle() {
 		if (this.isHidden) {
 			this.show();
@@ -158,7 +158,7 @@ public class EmojiViewEx extends LinearLayout {
 			this.hide();
 		}
 	}
-	
+
 	public void setBorderColor(int color) {
 		this.borderColor = color;
 		if (this.borders != null) {
@@ -167,12 +167,12 @@ public class EmojiViewEx extends LinearLayout {
 			}
 		}
 	}
-	
+
 	public void setCurrentCategory(int category) {
 		this.currentCategory = category;
 		this.show();
 	}
-	
+
 	public void setEditText(EditText edit) {
 		this.edit = edit;
 		if (this.emojiViews != null) {
@@ -181,7 +181,7 @@ public class EmojiViewEx extends LinearLayout {
 			}
 		}
 	}
-	
+
 	public void setIndicatorDotsColor(int color) {
 		this.indicatorDotsColor = color;
 		if (this.emojiViews != null) {
@@ -190,7 +190,7 @@ public class EmojiViewEx extends LinearLayout {
 			}
 		}
 	}
-	
+
 	public void setShowIndicatorDots(boolean value) {
 		this.showIndicatorDots = value;
 		if (this.emojiViews != null) {
@@ -199,15 +199,15 @@ public class EmojiViewEx extends LinearLayout {
 			}
 		}
 	}
-	
+
 	public void setRowNum(int rowNum) {
 		this.setIconNum(rowNum, this.colNum);
 	}
-	
+
 	public void setColNum(int colNum) {
 		this.setIconNum(this.rowNum, colNum);
 	}
-	
+
 	public void setIconNum(int rowNum, int colNum) {
 		this.rowNum = rowNum;
 		this.colNum = colNum;
@@ -217,4 +217,5 @@ public class EmojiViewEx extends LinearLayout {
 			}
 		}
 	}
+
 }
