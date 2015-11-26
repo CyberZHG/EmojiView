@@ -1,1 +1,1 @@
-include ':zhaohg', ':app'
+include ':emoji-view', ':app'

@@ -37,7 +37,7 @@ install {
         pom {
             project {
                 packaging 'aar'
-                name 'EmojiView'
+                name 'emoji-view'
                 url siteUrl
                 licenses {
                     license {
@@ -90,7 +90,7 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = "maven"
-        name = "EmojiView"
+        name = "emoji-view"
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]

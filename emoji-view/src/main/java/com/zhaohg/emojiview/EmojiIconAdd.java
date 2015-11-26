@@ -1,4 +1,4 @@
-package zhaohg.emojiview;
+package com.zhaohg.emojiview;
 
 import android.content.Context;
 import android.text.Editable;

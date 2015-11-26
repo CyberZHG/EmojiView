@@ -35,11 +35,11 @@ Eclipse is supported before release 1.3.
 
 ### Import libray using Gradle
 
-#### ~~From jCenter (Not Ready)~~
+#### From jCenter
 
 ```gradle
 dependencies {
-    compile 'com.zhaohg.emojiview:library:1.0.0'
+    compile 'com.zhaohg.emojiview:emoji-view:1.0.0'
 }
 ```
 
@@ -47,7 +47,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    compile project(':zhaohg')
+    compile project(':emoji-view')
 }
 ```
 
@@ -57,7 +57,7 @@ dependencies {
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     <!-- Use the following line for Eclipse -->
-    xmlns:emoji="http://schemas.android.com/apk/res/zhaohg.emojiviewdemo"
+    xmlns:emoji="http://schemas.android.com/apk/res/com.zhaohg.emojiviewdemo"
     <!-- Use the following line for Gradle -->
     xmlns:emoji="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -92,7 +92,7 @@ EmojiView emojiView = (EmojiViewEx) this.findViewById(R.id.emojiView);
 emojiView.setEditText(editText);
 ```
 
-### Use Native EditText and TextView
+### Use native EditText and TextView
 
 For EditText overload the `onTextChanged` method:
 

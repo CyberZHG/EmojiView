@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="zhaohg.emojiview">
+    package="com.zhaohg.emojiview">
 
     <application
         android:allowBackup="true"

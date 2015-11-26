@@ -1,6 +1,6 @@
 package zhaohg.emojiviewdemo;
 
-import zhaohg.emojiview.EmojiViewEx;
+import com.zhaohg.emojiview.EmojiViewEx;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -44,5 +44,5 @@ public class MainActivity extends Activity {
 	public void toggleEmojiView(View view) {
 		this.emojiView.toggle();
 	}
-	
+
 }

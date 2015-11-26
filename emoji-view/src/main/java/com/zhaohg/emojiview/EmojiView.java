@@ -1,4 +1,4 @@
-package zhaohg.emojiview;
+package com.zhaohg.emojiview;
 
 import java.util.ArrayList;
 import java.util.List;

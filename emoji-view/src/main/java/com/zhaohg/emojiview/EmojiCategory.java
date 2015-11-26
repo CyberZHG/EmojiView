@@ -1,4 +1,4 @@
-package zhaohg.emojiview;
+package com.zhaohg.emojiview;
 
 public class EmojiCategory {
 
@@ -10,5 +10,5 @@ public class EmojiCategory {
     public static final int ALL = 5;
 
     public static final int CATEGORY_NUM = 6;
-    
+
 }

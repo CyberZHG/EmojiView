@@ -1,4 +1,4 @@
-package zhaohg.emojiview;
+package com.zhaohg.emojiview;
 
 import android.graphics.Color;
 

@@ -1,4 +1,4 @@
-package zhaohg.emojiview;
+package com.zhaohg.emojiview;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -8,28 +8,28 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 public class EmojiPage extends LinearLayout {
-	
+
 	private EmojiView emojiView;
-	
+
 	private boolean initialized = false;
 	private int rowNum, colNum, start;
 	private long[] codeList;
 	private EmojiIcon[][] icons;
-	
+
 	public EmojiPage(Context context, EmojiView emojiView) {
 		super(context);
-		this.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 
+		this.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.MATCH_PARENT));
 		this.setOrientation(VERTICAL);
 		this.setGravity(Gravity.FILL);
 		this.emojiView = emojiView;
 		this.initListener();
 	}
-	
+
 	public EmojiView getEmojiView() {
 		return this.emojiView;
 	}
-	
+
 	public void setConfiguration(int rowNum, int colNum, long[] codeList, int start) {
 		this.rowNum = rowNum;
 		this.colNum = colNum;
@@ -37,7 +37,7 @@ public class EmojiPage extends LinearLayout {
 		this.codeList = codeList;
 		this.icons = new EmojiIcon[rowNum][colNum];
 	}
-	
+
 	public void initIcons() {
 		if (this.initialized) {
 			return;
@@ -67,21 +67,21 @@ public class EmojiPage extends LinearLayout {
 					}
 				}
 				icon.setPadding(4, 4, 4, 4);
-				icon.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 
+				icon.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 						ViewGroup.LayoutParams.MATCH_PARENT, 1));
 				row.addView(icon);
 			}
 			this.addView(row);
 		}
 	}
-	
+
 	protected EmojiIcon newIcon(EmojiView emojiView, long code, int id) {
 		EmojiIconAdd icon = new EmojiIconAdd(this.getContext(), emojiView);
 		icon.setEmojiCode(code);
 		icon.setImageDrawable(this.getContext().getResources().getDrawable(id));
 		return icon;
 	}
-	
+
 	public void initListener() {
 		this.setOnTouchListener(new OnTouchListener() {
 			@Override
